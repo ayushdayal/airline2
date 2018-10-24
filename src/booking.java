@@ -47,7 +47,7 @@ public class booking extends JFrame {
 		
 	}
 	String driverName = "com.mysql.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:33306/flight";
+	String url = "jdbc:mysql://localhost:3306/flight";
 	String userName = "root";
 	String password = "Vs16656915<>";
 	

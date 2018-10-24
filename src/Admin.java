@@ -74,10 +74,11 @@ public class Admin extends JFrame {
                     }
                     else
                     {
-                        LoginPage rgf=new LoginPage();
+                        /*LoginPage rgf=new LoginPage();
                         rgf.setUsername(s);
-
-                        rgf.setVisible(true);
+                        rgf.setVisible(true);*/
+                        AdminMenu menu= new AdminMenu();
+                        menu.setVisible(true);
                         setVisible(false);
                         dispose();
                         con.close();
