@@ -67,7 +67,8 @@ public class First extends JFrame {
 				PreparedStatement ps = con.prepareStatement(sql);
 				
 					ResultSet rs = ps.executeQuery();
-					if(rs==null)
+					if(
+							rs==null)
 					{
 						JOptionPane.showMessageDialog(null,"Invalid password or username");
 						
