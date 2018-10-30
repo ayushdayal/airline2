@@ -5,7 +5,7 @@ import javax.swing.event.MenuKeyListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-import  net.proteanit.sql.DbUtils;
+//import  net.proteanit.sql.DbUtils;
 
 
 public class AdminMenu extends JFrame {
@@ -65,6 +65,12 @@ public class AdminMenu extends JFrame {
                 crewpanel.setVisible(!crewpanel.isVisible());
             }
         });
+        check.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkPanel.setVisible(!isVisible());
+            }
+        });
         flight.add(reservation);
         flight.add(update);
         staff.add(pilot);
@@ -77,17 +83,15 @@ public class AdminMenu extends JFrame {
         contentPane.add(mainmenu);
         add(contentPane,BorderLayout.CENTER);
         crewpanel= getCrewpanel();
-        add(crewpanel);
+        add(crewpanel,BorderLayout.CENTER);
+
+        checkPanel= Paymentcheck();
+        add(checkPanel,BorderLayout.CENTER);
+        checkPanel.setVisible(true);
         dfs = pilotDetails();
         add(dfs);
-        check.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkPanel.setVisible(!isVisible());
-            }
-        });
-        checkPanel= Paymentcheck();
-        add(checkPanel);
+
+
 
 
     }
@@ -101,10 +105,21 @@ public class AdminMenu extends JFrame {
         crewpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         crewpanel.setLayout(null);
         crewpanel.setBounds(30,30,800,500);
+        crewpanel.setBackground(new Color(2342423));
 
         JLabel CrewidLabel= new JLabel(" Crew id ");
-        CrewidLabel.setBounds(50,250,100,20);
+        CrewidLabel.setBounds(5,50,100,20);
         crewpanel.add(CrewidLabel);
+        JLabel staffid= new JLabel(" staff id ");
+        staffid.setBounds(5,70,100,20);
+        crewpanel.add(staffid);
+        JLabel salary= new JLabel(" salary ");
+        salary.setBounds(5,90,100,20);
+        crewpanel.add(salary);
+        JLabel workingHours= new JLabel(" working hours ");
+        workingHours.setBounds(5,110,100,20);
+        crewpanel.add(workingHours);
+
         return crewpanel;
     }
 
@@ -238,10 +253,10 @@ public class AdminMenu extends JFrame {
 
          String query="select * from emp";
 
-         ResultSet set=OpenConection.openConnection(query);
+       //  ResultSet set=OpenConection.openConnection(query);
          // Dont call While loop or if condition here
 
-         table.setModel(DbUtils.resultSetToTableModel(set));
+//       table.setModel(DbUtils.resultSetToTableModel(set));
 
          return  checkPanel;
     }

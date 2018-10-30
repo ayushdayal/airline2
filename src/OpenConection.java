@@ -1,19 +1,18 @@
 import javax.swing.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 
- public class OpenConection {
+public class OpenConection {
     static  String driverName = "com.mysql.jdbc.Driver";
    static String url = "jdbc:mysql://localhost:3306/flight";
    static String userName = "root";
-   static String password = "sidhu@007";
+   static String password = "root";
+    static Connection con;
    public static ResultSet openConnection(String sqlQuery){
        try {
            Class.forName(driverName);
 
-       Connection con = DriverManager.getConnection(url, userName, password);
+
+           con = DriverManager.getConnection(url, userName, password);
            String sql = sqlQuery;
            PreparedStatement ps = con.prepareStatement(sql);
 
@@ -23,6 +22,13 @@ import java.sql.ResultSet;
        {
            JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",
                    JOptionPane.ERROR_MESSAGE);
+       }
+       finally {
+           try {
+               con.close();
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
        }
        return null;
    }
