@@ -4,10 +4,8 @@ import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
 import java.awt.*;
 import java.awt.event.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import  net.proteanit.sql.DbUtils;
 
 
 public class AdminMenu extends JFrame {
@@ -85,7 +83,7 @@ public class AdminMenu extends JFrame {
     public JPanel pilotDetails(){
         pilotPanel= new JPanel();
         pilotPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        pilotPanel.setBackground(new Color(222));
+//        pilotPanel.setBackground(new Color(222));
         pilotPanel.setLayout(null);
         pilotPanel.setBounds(0,-1000,800,500);
         JLabel searchHere= new JLabel("Pilot id");
@@ -198,8 +196,29 @@ public class AdminMenu extends JFrame {
         searchtext.setBounds(150,250,100,20);
         reservationpanel.add(searchtext);
 
+
         return reservationpanel;
     }
+
+     public JPanel Paymentcheck(){
+
+        checkPanel= new JPanel();
+         JTable table=new JTable();
+         JScrollPane scrollPane = new JScrollPane();
+         scrollPane.setBounds(97, 72, 218, 136);
+         checkPanel.add(scrollPane);
+         scrollPane.setViewportView(table);
+
+         String query="select * from emp";
+
+         ResultSet set=OpenConection.openConnection(query);
+         // Dont call While loop or if condition here
+
+         table.setModel(DbUtils.resultSetToTableModel(set));
+
+         return  checkPanel;
+    }
+
 
 
 }
