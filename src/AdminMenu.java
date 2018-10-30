@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 //import  net.proteanit.sql.DbUtils;
 
 
@@ -155,6 +156,47 @@ public class AdminMenu extends JFrame {
         button.setBounds(240, 70, 100, 20);
         button.setText("search");
         crewpanel.add(button);
+        JTextField staffidF = new JTextField(" ");
+
+
+        String s = staffidF.getText().toString();
+        final Integer[] s1 = new Integer[2];
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = "select salary from staff where staffid='" + s + "'";
+                ResultSet rs = OpenConection.openConnection(sql);
+
+
+                try {
+                    s1[0] =rs.getInt(0);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+                if (rs == null) {
+                    JOptionPane.showMessageDialog(null, "Invalid crew id");
+                }
+            }
+        });
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = "select workinghrs from staff where staffid='" + s + "'";
+                ResultSet rs = OpenConection.openConnection(sql);
+
+
+                try {
+                    s1[1] =rs.getInt(0);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+                if (rs == null) {
+                    JOptionPane.showMessageDialog(null, "Invalid crew id");
+                }
+            }
+        });
 
         JButton button2 = new JButton();
         button2.setBounds(340, 70, 100, 20);
@@ -176,15 +218,16 @@ public class AdminMenu extends JFrame {
 //        JTextField CrewidLabelF= new JTextField("  ");
 //        CrewidLabelF.setBounds(120,50,100,20);
 //        crewpanel.add(CrewidLabelF);
-        JTextField staffidF = new JTextField(" ");
         staffidF.setBounds(120, 70, 100, 20);
         crewpanel.add(staffidF);
         JTextField salaryF = new JTextField("  ");
         salaryF.setBounds(120, 90, 100, 20);
         crewpanel.add(salaryF);
+        salaryF.setText(String.valueOf(s1[0]));
         JTextField workingHoursF = new JTextField(" ");
         workingHoursF.setBounds(120, 110, 100, 20);
         crewpanel.add(workingHoursF);
+        workingHoursF.setText(String.valueOf(s1[1]));
 
         return crewpanel;
     }
@@ -199,7 +242,7 @@ public class AdminMenu extends JFrame {
 //        JLabel CrewidLabel= new JLabel(" Crew id ");
 //        CrewidLabel.setBounds(5,50,100,20);
 //        pilotPanel.add(CrewidLabel);
-        JLabel staffid = new JLabel(" staff id ");
+        JLabel staffid = new JLabel(" pilot id ");
         staffid.setBounds(5, 70, 100, 20);
         pilotPanel.add(staffid);
         JLabel salary = new JLabel(" salary ");
@@ -208,6 +251,9 @@ public class AdminMenu extends JFrame {
         JLabel workingHours = new JLabel(" working hours ");
         workingHours.setBounds(5, 110, 100, 20);
         pilotPanel.add(workingHours);
+        JLabel LicenceNo = new JLabel(" working hours ");
+        LicenceNo.setBounds(5, 130, 100, 20);
+        pilotPanel.add(LicenceNo);
 
         JButton button = new JButton();
         button.setBounds(240, 70, 100, 20);
@@ -243,6 +289,9 @@ public class AdminMenu extends JFrame {
         JTextField workingHoursF = new JTextField(" ");
         workingHoursF.setBounds(120, 110, 100, 20);
         pilotPanel.add(workingHoursF);
+        JTextField LicenceNoF = new JTextField(" working hours ");
+        LicenceNoF.setBounds(120, 130, 100, 20);
+        pilotPanel.add(LicenceNoF);
 
         return pilotPanel;
     }
@@ -256,7 +305,7 @@ public class AdminMenu extends JFrame {
         checkPanel.add(scrollPane);
         scrollPane.setViewportView(table);
 
-        String query = "select * from emp";
+        String query="select * from light";
 
         //  ResultSet set=OpenConection.openConnection(query);
         // Dont call While loop or if condition here
@@ -265,7 +314,7 @@ public class AdminMenu extends JFrame {
 
         return checkPanel;
     }
-    
+
     public JPanel getUdatePanel() {
         updatePanel = new JPanel();
         updatePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -276,15 +325,15 @@ public class AdminMenu extends JFrame {
 //        JLabel CrewidLabel= new JLabel(" Crew id ");
 //        CrewidLabel.setBounds(5,50,100,20);
 //        updatePanel.add(CrewidLabel);
-        JLabel staffid = new JLabel(" staff id ");
-        staffid.setBounds(5, 70, 100, 20);
-        updatePanel.add(staffid);
-        JLabel salary = new JLabel(" salary ");
-        salary.setBounds(5, 90, 100, 20);
-        updatePanel.add(salary);
-        JLabel workingHours = new JLabel(" working hours ");
-        workingHours.setBounds(5, 110, 100, 20);
-        updatePanel.add(workingHours);
+        JLabel fid = new JLabel(" fid");
+        fid.setBounds(5, 70, 100, 20);
+        updatePanel.add(fid);
+        JLabel from = new JLabel(" from ");
+        from.setBounds(5, 90, 100, 20);
+        updatePanel.add(from);
+        JLabel to = new JLabel(" to ");
+        to.setBounds(5, 110, 100, 20);
+        updatePanel.add(to);
 
         JButton button = new JButton();
         button.setBounds(240, 70, 100, 20);
@@ -311,15 +360,15 @@ public class AdminMenu extends JFrame {
 //        JTextField CrewidLabelF= new JTextField("  ");
 //        CrewidLabelF.setBounds(120,50,100,20);
 //        updatePanel.add(CrewidLabelF);
-        JTextField staffidF = new JTextField(" ");
-        staffidF.setBounds(120, 70, 100, 20);
-        updatePanel.add(staffidF);
-        JTextField salaryF = new JTextField("  ");
-        salaryF.setBounds(120, 90, 100, 20);
-        updatePanel.add(salaryF);
-        JTextField workingHoursF = new JTextField(" ");
-        workingHoursF.setBounds(120, 110, 100, 20);
-        updatePanel.add(workingHoursF);
+        JTextField FidF = new JTextField(" ");
+        FidF.setBounds(120, 70, 100, 20);
+        updatePanel.add(FidF);
+        JTextField fromF = new JTextField("  ");
+        fromF.setBounds(120, 90, 100, 20);
+        updatePanel.add(fromF);
+        JTextField toF = new JTextField(" ");
+        toF.setBounds(120, 110, 100, 20);
+        updatePanel.add(toF);
 
         return updatePanel;
     }
@@ -334,50 +383,35 @@ public class AdminMenu extends JFrame {
 //        JLabel CrewidLabel= new JLabel(" Crew id ");
 //        CrewidLabel.setBounds(5,50,100,20);
 //        checkReservationPanel.add(CrewidLabel);
-        JLabel staffid = new JLabel(" staff id ");
-        staffid.setBounds(5, 70, 100, 20);
-        checkReservationPanel.add(staffid);
-        JLabel salary = new JLabel(" salary ");
-        salary.setBounds(5, 90, 100, 20);
-        checkReservationPanel.add(salary);
-        JLabel workingHours = new JLabel(" working hours ");
-        workingHours.setBounds(5, 110, 100, 20);
-        checkReservationPanel.add(workingHours);
+        JLabel fid = new JLabel(" staff id ");
+        fid.setBounds(5, 70, 100, 20);
+        checkReservationPanel.add(fid);
+        JLabel avaSeats = new JLabel(" salary ");
+        avaSeats.setBounds(5, 90, 100, 20);
+        checkReservationPanel.add(avaSeats);
+
 
         JButton button = new JButton();
         button.setBounds(240, 70, 100, 20);
         button.setText("search");
         checkReservationPanel.add(button);
 
-        JButton button2 = new JButton();
-        button2.setBounds(340, 70, 100, 20);
-        button2.setText("new");
-        checkReservationPanel.add(button2);
 
         JButton button3 = new JButton();
         button3.setBounds(340, 90, 100, 20);
         button3.setText("edit");
         checkReservationPanel.add(button3);
 
-        JButton button4 = new JButton();
-        button4.setBounds(340, 110, 100, 20);
-        button4.setText("delete");
-        button4.setBackground(new Color(33333333));
-        checkReservationPanel.add(button4);
-
-
 //        JTextField CrewidLabelF= new JTextField("  ");
 //        CrewidLabelF.setBounds(120,50,100,20);
 //        checkReservationPanel.add(CrewidLabelF);
-        JTextField staffidF = new JTextField(" ");
-        staffidF.setBounds(120, 70, 100, 20);
-        checkReservationPanel.add(staffidF);
-        JTextField salaryF = new JTextField("  ");
-        salaryF.setBounds(120, 90, 100, 20);
-        checkReservationPanel.add(salaryF);
-        JTextField workingHoursF = new JTextField(" ");
-        workingHoursF.setBounds(120, 110, 100, 20);
-        checkReservationPanel.add(workingHoursF);
+        JTextField fifF = new JTextField(" ");
+        fifF.setBounds(120, 70, 100, 20);
+        checkReservationPanel.add(fifF);
+        JTextField avaSeatsF = new JTextField("  ");
+        avaSeatsF.setBounds(120, 90, 100, 20);
+        checkReservationPanel.add(avaSeatsF);
+
 
         return checkReservationPanel;
     }
