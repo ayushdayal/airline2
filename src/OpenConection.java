@@ -24,11 +24,11 @@ public class OpenConection {
                    JOptionPane.ERROR_MESSAGE);
        }
        finally {
-           try {
-               con.close();
-           } catch (SQLException e) {
-               e.printStackTrace();
-           }
+//           try {
+//               con.close();
+//           } catch (SQLException e) {
+//               e.printStackTrace();
+//           }
        }
        return null;
    }
