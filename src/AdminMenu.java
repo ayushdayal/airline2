@@ -180,7 +180,7 @@ public class AdminMenu extends JFrame {
         updatePanel.add(searchtext);
 
 
-        return pilotPanel;
+        return updatePanel;
     }
 
     public JPanel CheckReservation(){
@@ -200,5 +200,6 @@ public class AdminMenu extends JFrame {
 
         return reservationpanel;
     }
+
 
 }

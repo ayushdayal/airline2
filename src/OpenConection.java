@@ -4,12 +4,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-abstract public class OpenConection {
-    String driverName = "com.mysql.jdbc.Driver";
-    String url = "jdbc:mysql://localhost:3306/flight";
-    String userName = "root";
-    String password = "sidhu@007";
-   public ResultSet openConnection(String sqlQuery){
+ public class OpenConection {
+    static  String driverName = "com.mysql.jdbc.Driver";
+   static String url = "jdbc:mysql://localhost:3306/flight";
+   static String userName = "root";
+   static String password = "sidhu@007";
+   public static ResultSet openConnection(String sqlQuery){
        try {
            Class.forName(driverName);
 
