@@ -58,6 +58,13 @@ public class AdminMenu extends JFrame {
                 abc();
             }
         });
+        crew.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("crew action listner ");
+                crewpanel.setVisible(!crewpanel.isVisible());
+            }
+        });
         flight.add(reservation);
         flight.add(update);
         staff.add(pilot);
@@ -69,9 +76,19 @@ public class AdminMenu extends JFrame {
 
         contentPane.add(mainmenu);
         add(contentPane,BorderLayout.CENTER);
-
+        crewpanel= getCrewpanel();
+        add(crewpanel);
         dfs = pilotDetails();
         add(dfs);
+        check.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkPanel.setVisible(!isVisible());
+            }
+        });
+        checkPanel= Paymentcheck();
+        add(checkPanel);
+
 
     }
     public void abc(){
@@ -79,6 +96,17 @@ public class AdminMenu extends JFrame {
         dfs.setVisible(!dfs.isVisible());
     }
 
+    public JPanel getCrewpanel(){
+        crewpanel= new JPanel();
+        crewpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        crewpanel.setLayout(null);
+        crewpanel.setBounds(30,30,800,500);
+
+        JLabel CrewidLabel= new JLabel(" Crew id ");
+        CrewidLabel.setBounds(50,250,100,20);
+        crewpanel.add(CrewidLabel);
+        return crewpanel;
+    }
 
     public JPanel pilotDetails(){
         pilotPanel= new JPanel();
@@ -180,13 +208,12 @@ public class AdminMenu extends JFrame {
 
         return updatePanel;
     }
-
     public JPanel CheckReservation(){
        JPanel reservationpanel=new JPanel();
         reservationpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
        // reservationpanel.setBackground(new Color(222));
         reservationpanel.setLayout(null);
-        reservationpanel.setBounds(0,-1000,800,500);
+        reservationpanel.setBounds(0,0,800,500);
         JLabel searchHere= new JLabel(" Enter Flight id ");
 //        searchHere.setText("search here");
         searchHere.setBounds(50,250,100,20);
