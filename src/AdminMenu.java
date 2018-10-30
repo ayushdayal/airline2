@@ -35,6 +35,7 @@ public class AdminMenu extends JFrame {
             }
         });
     }
+
     JPanel dfs;
     JPanel container;
 
@@ -44,11 +45,11 @@ public class AdminMenu extends JFrame {
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
-        contentPane.setBounds(0,0,800,20);
+        contentPane.setBounds(0, 0, 800, 20);
         contentPane.setBackground(new Color(100100));
 
         JMenuBar mainmenu = new JMenuBar();
-        mainmenu.setBounds(0,0,900,20);
+        mainmenu.setBounds(0, 0, 900, 20);
         JMenu flight = new JMenu("FLIGHT"), staff = new JMenu("STAFF"), payment = new JMenu("PAYMENT");
         JMenuItem reservation = new JMenuItem("CHECK RESERVATION"), update = new JMenuItem("UPDATE"), pilot = new JMenuItem("PILOT"), crew = new JMenuItem("CREW"), check = new JMenuItem("CHECK");
 
@@ -81,199 +82,196 @@ public class AdminMenu extends JFrame {
         mainmenu.add(payment);
 
         contentPane.add(mainmenu);
-        add(contentPane,BorderLayout.CENTER);
-        crewpanel= getCrewpanel();
-        add(crewpanel,BorderLayout.CENTER);
+        add(contentPane, BorderLayout.CENTER);
+        crewpanel = getCrewpanel();
+        add(crewpanel, BorderLayout.CENTER);
 
-        checkPanel= Paymentcheck();
-        add(checkPanel,BorderLayout.CENTER);
+        checkPanel = Paymentcheck();
+        add(checkPanel, BorderLayout.CENTER);
         checkPanel.setVisible(true);
         dfs = pilotDetails();
         add(dfs);
 
 
-
-
     }
-    public void abc(){
+
+    public void abc() {
         System.out.println("asd");
         dfs.setVisible(!dfs.isVisible());
     }
 
-    public JPanel getCrewpanel(){
-        crewpanel= new JPanel();
+    public JPanel getCrewpanel() {
+        crewpanel = new JPanel();
         crewpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         crewpanel.setLayout(null);
-        crewpanel.setBounds(30,30,800,500);
+        crewpanel.setBounds(30, 30, 800, 500);
         crewpanel.setBackground(new Color(2342423));
 
-        JLabel CrewidLabel= new JLabel(" Crew id ");
-        CrewidLabel.setBounds(5,50,100,20);
-        crewpanel.add(CrewidLabel);
-        JLabel staffid= new JLabel(" staff id ");
-        staffid.setBounds(5,70,100,20);
+//        JLabel CrewidLabel= new JLabel(" Crew id ");
+//        CrewidLabel.setBounds(5,50,100,20);
+//        crewpanel.add(CrewidLabel);
+        JLabel staffid = new JLabel(" staff id ");
+        staffid.setBounds(5, 70, 100, 20);
         crewpanel.add(staffid);
-        JLabel salary= new JLabel(" salary ");
-        salary.setBounds(5,90,100,20);
+        JLabel salary = new JLabel(" salary ");
+        salary.setBounds(5, 90, 100, 20);
         crewpanel.add(salary);
-        JLabel workingHours= new JLabel(" working hours ");
-        workingHours.setBounds(5,110,100,20);
+        JLabel workingHours = new JLabel(" working hours ");
+        workingHours.setBounds(5, 110, 100, 20);
         crewpanel.add(workingHours);
 
-        JTextField CrewidLabelF= new JTextField("  ");
-        CrewidLabelF.setBounds(120,50,100,20);
-        crewpanel.add(CrewidLabelF);
-        JTextField staffidF= new JTextField(" ");
-        staffidF.setBounds(120,70,100,20);
+        JButton button = new JButton();
+        button.setBounds(240, 70, 100, 20);
+        button.setText("search");
+        crewpanel.add(button);
+
+        JButton button2 = new JButton();
+        button2.setBounds(340, 70, 100, 20);
+        button2.setText("new");
+        crewpanel.add(button2);
+
+        JButton button3 = new JButton();
+        button3.setBounds(340, 90, 100, 20);
+        button3.setText("edit");
+        crewpanel.add(button3);
+
+        JButton button4 = new JButton();
+        button4.setBounds(340, 110, 100, 20);
+        button4.setText("delete");
+        button4.setBackground(new Color(888888888));
+        crewpanel.add(button4);
+
+
+//        JTextField CrewidLabelF= new JTextField("  ");
+//        CrewidLabelF.setBounds(120,50,100,20);
+//        crewpanel.add(CrewidLabelF);
+        JTextField staffidF = new JTextField(" ");
+        staffidF.setBounds(120, 70, 100, 20);
         crewpanel.add(staffidF);
-        JTextField salaryF= new JTextField("  ");
-        salaryF.setBounds(120,90,100,20);
+        JTextField salaryF = new JTextField("  ");
+        salaryF.setBounds(120, 90, 100, 20);
         crewpanel.add(salaryF);
-        JTextField workingHoursF= new JTextField(" ");
-        workingHoursF.setBounds(120,110,100,20);
+        JTextField workingHoursF = new JTextField(" ");
+        workingHoursF.setBounds(120, 110, 100, 20);
         crewpanel.add(workingHoursF);
 
         return crewpanel;
     }
 
-    public JPanel pilotDetails(){
-        pilotPanel= new JPanel();
+    public JPanel pilotDetails() {
+        pilotPanel = new JPanel();
         pilotPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 //        pilotPanel.setBackground(new Color(222));
         pilotPanel.setLayout(null);
-        pilotPanel.setBounds(0,-1000,800,500);
-        JLabel searchHere= new JLabel("Pilot id");
-        searchHere.setBounds(50,250,100,20);
+        pilotPanel.setBounds(0, -1000, 800, 500);
+        JLabel searchHere = new JLabel("Pilot id");
+        searchHere.setBounds(50, 250, 100, 20);
         pilotPanel.add(searchHere);
 
-        JTextField searchtext  = new JTextField();
-        searchtext.setBounds(150,250,100,20);
+        JTextField searchtext = new JTextField();
+        searchtext.setBounds(150, 250, 100, 20);
 
-       JButton searchbutton = new JButton("SEARCH");
-       searchbutton.setBounds(250,250,100,20);
-       searchbutton.addMouseListener(new MouseListener() {
-           @Override
-           public void mouseClicked(MouseEvent e) {
-               try
-               {
-                   Class.forName(driverName);
-                   Connection con = DriverManager.getConnection(url,userName,password);
-                   String s=searchtext.getText();
-                   String sql = "select * from pilot where pid='"+s+"'";
-                   PreparedStatement ps = con.prepareStatement(sql);
+        JButton searchbutton = new JButton("SEARCH");
+        searchbutton.setBounds(250, 250, 100, 20);
+        searchbutton.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    String s = searchtext.getText();
+                    String sql = "select * from pilot where pid='" + s + "'";
+                    ResultSet rs = OpenConection.openConnection(sql);
+                    if (rs == null) {
+                        JOptionPane.showMessageDialog(null, "Invalid pilot id");
+                    }
+                } catch (Exception exp) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
 
-                   ResultSet rs = ps.executeQuery();
-                   if(rs==null)
-                   {
-                       JOptionPane.showMessageDialog(null,"Invalid pilot id");
+            @Override
+            public void mousePressed(MouseEvent e) {
 
-                   }
-                   else
-                   {
+            }
 
+            @Override
+            public void mouseReleased(MouseEvent e) {
 
-//                       LoginPage rgf=new LoginPage();
-//                       rgf.setUsername(s);
-//
-//                       rgf.setVisible(true);
-//                       setVisible(false);
-//                       dispose();
-//                       con.close();
+            }
 
-                   }
+            @Override
+            public void mouseEntered(MouseEvent e) {
 
+            }
 
-               }
-               catch(Exception exp)
+            @Override
+            public void mouseExited(MouseEvent e) {
 
-               {
-                   JOptionPane.showMessageDialog(null,e);
+            }
 
-               }
-           }
-
-           @Override
-           public void mousePressed(MouseEvent e) {
-
-           }
-
-           @Override
-           public void mouseReleased(MouseEvent e) {
-
-           }
-
-           @Override
-           public void mouseEntered(MouseEvent e) {
-
-           }
-
-           @Override
-           public void mouseExited(MouseEvent e) {
-
-           }
-       });
+        });
 
         pilotPanel.add(searchtext);
 
         return pilotPanel;
     }
-    public JPanel flighUpdate(){
-        updatePanel= new JPanel();
+
+    public JPanel flighUpdate() {
+        updatePanel = new JPanel();
 //        updatePanel.setBounds(0,200,900,500);
         updatePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         updatePanel.setBackground(new Color(222));
         updatePanel.setLayout(null);
-        updatePanel.setBounds(0,-1000,800,500);
-        JLabel searchHere= new JLabel("Pilot id");
+        updatePanel.setBounds(0, -1000, 800, 500);
+        JLabel searchHere = new JLabel("Pilot id");
 //        searchHere.setText("search here");
-        searchHere.setBounds(50,250,100,20);
+        searchHere.setBounds(50, 250, 100, 20);
         updatePanel.add(searchHere);
 
-        JTextField searchtext  = new JTextField();
-        searchtext.setBounds(150,250,100,20);
+        JTextField searchtext = new JTextField();
+        searchtext.setBounds(150, 250, 100, 20);
         updatePanel.add(searchtext);
 
 
         return updatePanel;
     }
-    public JPanel CheckReservation(){
-       JPanel reservationpanel=new JPanel();
+
+    public JPanel CheckReservation() {
+        JPanel reservationpanel = new JPanel();
         reservationpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-       // reservationpanel.setBackground(new Color(222));
+        // reservationpanel.setBackground(new Color(222));
         reservationpanel.setLayout(null);
-        reservationpanel.setBounds(0,0,800,500);
-        JLabel searchHere= new JLabel(" Enter Flight id ");
+        reservationpanel.setBounds(0, 0, 800, 500);
+        JLabel searchHere = new JLabel(" Enter Flight id ");
 //        searchHere.setText("search here");
-        searchHere.setBounds(50,250,100,20);
+        searchHere.setBounds(50, 250, 100, 20);
         reservationpanel.add(searchHere);
 
-        JTextField searchtext  = new JTextField();
-        searchtext.setBounds(150,250,100,20);
+        JTextField searchtext = new JTextField();
+        searchtext.setBounds(150, 250, 100, 20);
         reservationpanel.add(searchtext);
 
 
         return reservationpanel;
     }
 
-     public JPanel Paymentcheck(){
+    public JPanel Paymentcheck() {
 
-        checkPanel= new JPanel();
-         JTable table=new JTable();
-         JScrollPane scrollPane = new JScrollPane();
-         scrollPane.setBounds(97, 72, 218, 136);
-         checkPanel.add(scrollPane);
-         scrollPane.setViewportView(table);
+        checkPanel = new JPanel();
+        JTable table = new JTable();
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(97, 72, 218, 136);
+        checkPanel.add(scrollPane);
+        scrollPane.setViewportView(table);
 
-         String query="select * from emp";
+        String query = "select * from emp";
 
-       //  ResultSet set=OpenConection.openConnection(query);
-         // Dont call While loop or if condition here
+        //  ResultSet set=OpenConection.openConnection(query);
+        // Dont call While loop or if condition here
 
 //       table.setModel(DbUtils.resultSetToTableModel(set));
 
-         return  checkPanel;
+        return checkPanel;
     }
-
 
 
 }
