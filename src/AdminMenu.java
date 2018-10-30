@@ -120,6 +120,19 @@ public class AdminMenu extends JFrame {
         workingHours.setBounds(5,110,100,20);
         crewpanel.add(workingHours);
 
+        JTextField CrewidLabelF= new JTextField("  ");
+        CrewidLabelF.setBounds(120,50,100,20);
+        crewpanel.add(CrewidLabelF);
+        JTextField staffidF= new JTextField(" ");
+        staffidF.setBounds(120,70,100,20);
+        crewpanel.add(staffidF);
+        JTextField salaryF= new JTextField("  ");
+        salaryF.setBounds(120,90,100,20);
+        crewpanel.add(salaryF);
+        JTextField workingHoursF= new JTextField(" ");
+        workingHoursF.setBounds(120,110,100,20);
+        crewpanel.add(workingHoursF);
+
         return crewpanel;
     }
 
