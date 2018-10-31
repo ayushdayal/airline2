@@ -66,17 +66,12 @@ public class Zero extends JFrame {
         });
 
 
-        btnNewButton.setBounds(5, 422, 934, 32);
+        btnNewButton.setBounds(5, 70, 934, 32);
         Loginpane.add(btnNewButton);
 
         btnNewAccount = new JButton("LOGIN AS CUSTOMER");
-        btnNewAccount.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
 
-
-        });
-        btnNewAccount.setBounds(5, 454, 934, 26);
+        btnNewAccount.setBounds(5, 102, 934, 32);
         btnNewAccount.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -84,11 +79,6 @@ public class Zero extends JFrame {
                 frame2.setVisible(true);
                 setVisible(false);
                 dispose();
-
-
-
-
-
             }
         });
         Loginpane.add(btnNewAccount);

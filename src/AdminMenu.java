@@ -1,9 +1,11 @@
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
-//import  net.proteanit.sql.DbUtils;
+import  net.proteanit.sql.DbUtils;
+
 
 
 public class AdminMenu extends JFrame {
@@ -127,10 +129,6 @@ public class AdminMenu extends JFrame {
 
     }
 
-    public void abc() {
-        System.out.println("asd");
-        dfs.setVisible(!dfs.isVisible());
-    }
 
     public JPanel getCrewpanel() {
         crewpanel = new JPanel();
@@ -307,10 +305,11 @@ public class AdminMenu extends JFrame {
 
         String query="select * from light";
 
-        //  ResultSet set=OpenConection.openConnection(query);
+          ResultSet set=OpenConection.openConnection(query);
         // Dont call While loop or if condition here
 
-//       table.setModel(DbUtils.resultSetToTableModel(set));
+      table.setModel(DbUtils.resultSetToTableModel(set));
+
 
         return checkPanel;
     }
@@ -383,12 +382,12 @@ public class AdminMenu extends JFrame {
 //        JLabel CrewidLabel= new JLabel(" Crew id ");
 //        CrewidLabel.setBounds(5,50,100,20);
 //        checkReservationPanel.add(CrewidLabel);
-        JLabel fid = new JLabel(" staff id ");
+        JLabel fid = new JLabel(" flight id ");
         fid.setBounds(5, 70, 100, 20);
         checkReservationPanel.add(fid);
-        JLabel avaSeats = new JLabel(" salary ");
-        avaSeats.setBounds(5, 90, 100, 20);
-        checkReservationPanel.add(avaSeats);
+//        JLabel avaSeats = new JLabel(" A seats ");
+//        avaSeats.setBounds(5, 90, 100, 20);
+//        checkReservationPanel.add(avaSeats);
 
 
         JButton button = new JButton();
@@ -408,9 +407,30 @@ public class AdminMenu extends JFrame {
         JTextField fifF = new JTextField(" ");
         fifF.setBounds(120, 70, 100, 20);
         checkReservationPanel.add(fifF);
-        JTextField avaSeatsF = new JTextField("  ");
-        avaSeatsF.setBounds(120, 90, 100, 20);
-        checkReservationPanel.add(avaSeatsF);
+//        JTextField avaSeatsF = new JTextField("  ");
+//        avaSeatsF.setBounds(120, 90, 100, 20);
+//        checkReservationPanel.add(avaSeatsF);
+
+
+        JTable table = new JTable();
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(0, 300, 900, 400);
+        checkReservationPanel.add(scrollPane);
+        scrollPane.setViewportView(table);
+
+        String query="select * from bookedticket where flight_id="+fifF.getText().toString()+";" ;
+System.out.println(query);
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                ResultSet set=OpenConection.openConnection(query);
+                // Dont call While loop or if condition here
+
+                table.setModel(DbUtils.resultSetToTableModel(set));
+            }
+        });
+
 
 
         return checkReservationPanel;
