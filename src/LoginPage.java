@@ -27,6 +27,8 @@ import net.miginfocom.swing.MigLayout;
 //import com.mysql.cj.jdbc.result.ResultSetMetaData;
 import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDayChooser;
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -62,7 +64,6 @@ public class LoginPage extends JFrame {
 	private JTextField textField1;
 	private String username;
 	private int ID;
-	private JTable table_1;
 	public void setuserid(int t)
 	{
 		this.ID=t;
@@ -95,79 +96,7 @@ public class LoginPage extends JFrame {
 	}
 		
 	
-	public  void showTableData()
-	{
 
-	/*frame1 = new JFrame("Database Search Result");
-	frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame1.getContentPane().setLayout(new BorderLayout());*/
-	
-	//TableModel tm = new TableModel();
-	DefaultTableModel model = new DefaultTableModel();
-	model.setColumnIdentifiers(columnNames);
-	//DefaultTableModel model = new DefaultTableModel(tm.getData1(), tm.getColumnNames()); 
-	//table = new JTable(model);
-	//table1 = new JTable();
-	table_1.setModel(model); 
-	table_1.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-	table_1.setFillsViewportHeight(true);
-	/*JScrollPane scroll = new JScrollPane(table_1);
-	scroll.setHorizontalScrollBarPolicy(
-	JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	scroll.setVerticalScrollBarPolicy(
-	JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED); */
-	/*JPanel tablePanel=new JPanel(new Absolut);
-	tablePanel.add(table_1,BorderLayout.CENTER);
-	tablePanel.add(table_1.getTableHeader(),BorderLayout.NORTH);*/
-	String name= "";
-	String departure= "";
-	String arrival= "";
-	int id,seats,price;
-	
-	try
-	{ 
-	String sql = "select * from light";
-
-		ResultSet rs = OpenConection.openConnection(sql);
-		int i =0;
-		
-		if(rs.next())
-		{
-			id=rs.getInt("flight_id");
-		name= rs.getString("fName");
-		departure = rs.getString("dFrom");
-		arrival = rs.getString("arrivesto");
-		seats = rs.getInt("Seats"); 
-		price=rs.getInt("Price");
-		model.addRow(new Object[]{id,name,departure,arrival,seats,price});
-		i++; 
-		}
-	
-	
-	if(i <1)
-	{
-	JOptionPane.showMessageDialog(null, "No Record Found","Error",
-	JOptionPane.ERROR_MESSAGE);
-	}
-	/*if(i ==1)
-	{
-	System.out.println(i+" Record Found");
-	}
-	else
-	{
-	System.out.println(i+" Records Found");
-	}*/
-		
-	}
-	catch(Exception ex)
-	{
-	JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",
-	JOptionPane.ERROR_MESSAGE);
-	}
-	/*frame1.getContentPane().add(scroll);
-	frame1.setVisible(true);
-	frame1.setSize(400,300);*/
-	}
 
 	/**
 	 * Create the frame.
@@ -187,24 +116,47 @@ public class LoginPage extends JFrame {
 			
 			JLabel lblFrom = new JLabel("FROM");
 			lblFrom.setBounds(132, 142, 95, 13);
-			
+
+			String getDestinationQuery="select distinct dFrom from light ; ";
+			ResultSet rs=OpenConection.openConnection(getDestinationQuery);
+			String destinations[]= new String[15];
+			try {
+
+				int i=0;
+				while (rs.next())
+					destinations[i++]=rs.getString(1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+
 			JComboBox comboBox = new JComboBox();
 			comboBox.setBounds(251, 139, 129, 19);
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Delhi", "Mumbai", "Ahmedabad", "Hyderabad", "Pune"}));
+			comboBox.setModel(new DefaultComboBoxModel(destinations));
 			comboBox.setToolTipText("");
 			
 			JLabel lblTo = new JLabel("TO");
 			lblTo.setBounds(442, 137, 34, 22);
-			
-			JComboBox comboBox_1 = new JComboBox();
-			comboBox_1.setBounds(562, 139, 129, 19);
-			comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Delhi", "Mumbai", "Ahmedabd", "Pune", "Hyderabad"}));
+
+			String toS[]= new String[15];
+			try {
+		         getDestinationQuery="select distinct arrivesto from light ; ";
+rs=OpenConection.openConnection(getDestinationQuery);
+				int i=0;
+				while (rs.next())
+					toS[i++]=rs.getString(1);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			JComboBox comboBox2 = new JComboBox();
+			comboBox2.setBounds(562, 139, 129, 19);
+			comboBox2.setModel(new DefaultComboBoxModel(toS));
 			Loginpane.setLayout(null);
 			Loginpane.add(label);
 			Loginpane.add(lblFrom);
 			Loginpane.add(comboBox);
 			Loginpane.add(lblTo);
-			Loginpane.add(comboBox_1);
+			Loginpane.add(comboBox2);
 			
 			JCalendar calendar = new JCalendar();
 			calendar.setBounds(251, 180, 206, 135);
@@ -233,12 +185,26 @@ public class LoginPage extends JFrame {
 			
 			JButton btnSearch = new JButton("Search");
 			btnSearch.setBounds(0, 334, 904, 28);
-			btnSearch.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					showTableData();
-				}
-			});
+//			btnSearch.addMouseListener(new MouseAdapter() {
+//				@Override
+//				public void mouseClicked(MouseEvent e) {
+//					showTableData();
+//				}
+//			});
+			btnSearch.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JTable table = new JTable();
+                    String query="select * from light where dFrom="+comboBox.getSelectedItem().toString()+" and arrivesto="+comboBox2.getSelectedItem().toString()+";" ;
+                    System.out.println(query);
+                    ResultSet set=OpenConection.openConnection(query);
+                    table.setModel(DbUtils.resultSetToTableModel(set));
+                    JScrollPane scrollPane = new JScrollPane();
+                    scrollPane.setBounds(0, 400, 900, 400);
+                    Loginpane.add(scrollPane);
+                    scrollPane.setViewportView(table);
+                }
+            });
 			Loginpane.add(btnSearch);
 			
 			JButton btnMyBookings = new JButton("My Bookings");
@@ -300,16 +266,7 @@ public class LoginPage extends JFrame {
 			scrollPane.setBounds(31, 401, 800, 162);
 			Loginpane.add(scrollPane);
 			
-			table_1 = new JTable();
-			table_1.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					int index=table_1.getSelectedRow();
-					textField.setText(table_1.getValueAt(index, 0).toString());
-					textField1.setText(table_1.getValueAt(index, 5).toString());
-				}
-			});
-			scrollPane.setViewportView(table_1);
+
 			
 			
 			

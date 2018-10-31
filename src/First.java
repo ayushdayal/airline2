@@ -110,11 +110,7 @@ public class First extends JFrame {
 				rgf.frame.setVisible(true);
 				setVisible(false);
 				dispose();
-		        
-		       
-		      
-		        
-		       
+
 			}
 		});
 		Loginpane.add(btnNewAccount);

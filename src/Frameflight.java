@@ -187,7 +187,7 @@ public class Frameflight  {
 					String sql="insert into CUSTOMERS(USERNAME,PASSWORD,NAME,AGE,ADDRESS,PHONE_NO,EMAIL)"+" VALUES('"+textField.getText()+"','"+textField_1.getText()+"','"+textField_2.getText()+
 							"','"+textField_3.getText()+"','"+textField_4.getText()+"','"+textField_5.getText()+"','"+textField_6.getText()+"')";
 					//stmt.executeUpdate(sql);
-					OpenConection.openConnection(sql);
+					OpenConection.openConnection(sql,7);
 					//con.close();
 					JOptionPane.showMessageDialog(null,"customer added");
 					

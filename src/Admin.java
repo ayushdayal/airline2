@@ -54,19 +54,16 @@ public class Admin extends JFrame {
         Loginpane.setLayout(null);
 
         JButton btnNewButton = new JButton("LOGIN");
-        btnNewButton.addMouseListener(new MouseAdapter() {
+        btnNewButton.addActionListener(new ActionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                try
-                {
-                    Class.forName(driverName);
-                    Connection con = DriverManager.getConnection(url, userName, password);
+            public void actionPerformed(ActionEvent e) {
+
                     String s=userName_1.getText();
                     String p=passwordField.getSelectedText();
                     String sql = "select * from admins where USERNAME='"+s+"'and password='"+p+"'";
-                    PreparedStatement ps = con.prepareStatement(sql);
 
-                    ResultSet rs = ps.executeQuery();
+
+                    ResultSet rs = OpenConection.openConnection(sql);
                     if(rs==null)
                     {
                         JOptionPane.showMessageDialog(null,"Invalid password or username");
@@ -81,20 +78,14 @@ public class Admin extends JFrame {
                         menu.setVisible(true);
                         setVisible(false);
                         dispose();
-                        con.close();
 
                     }
 
 
                 }
-                catch(Exception exp)
 
-                {
-                    JOptionPane.showMessageDialog(null,e);
-
-                }
             }
-        });
+        );
         btnNewButton.setBounds(5, 422, 934, 32);
         Loginpane.add(btnNewButton);
 
