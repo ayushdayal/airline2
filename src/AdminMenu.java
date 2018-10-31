@@ -131,6 +131,11 @@ public class AdminMenu extends JFrame {
 
 
     public JPanel getCrewpanel() {
+        JTextField staffidF;
+
+
+        JTextField salaryF = new JTextField("  ");
+        JTextField workingHoursF = new JTextField(" ");
         crewpanel = new JPanel();
         crewpanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         crewpanel.setLayout(null);
@@ -143,73 +148,97 @@ public class AdminMenu extends JFrame {
         JLabel staffid = new JLabel(" staff id ");
         staffid.setBounds(5, 70, 100, 20);
         crewpanel.add(staffid);
+
         JLabel salary = new JLabel(" salary ");
         salary.setBounds(5, 90, 100, 20);
         crewpanel.add(salary);
+
         JLabel workingHours = new JLabel(" working hours ");
         workingHours.setBounds(5, 110, 100, 20);
         crewpanel.add(workingHours);
 
+        staffidF = new JTextField(" ");
+
         JButton button = new JButton();
         button.setBounds(240, 70, 100, 20);
         button.setText("search");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql="select * from staff where staffid=\'"+staffidF.getText()+"\'";
+                ResultSet rs= OpenConection.openConnection(sql);
+                try {
+                    rs.next();
+                    salaryF.setText( String.valueOf(rs.getInt(2)) );
+                    workingHoursF.setText( String.valueOf(rs.getInt(3)) );
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+
+            }
+        });
         crewpanel.add(button);
-        JTextField staffidF = new JTextField(" ");
+
 
 
         String s = staffidF.getText().toString();
         final Integer[] s1 = new Integer[2];
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String sql = "select salary from staff where staffid='" + s + "'";
-                ResultSet rs = OpenConection.openConnection(sql);
 
-
-                try {
-                    s1[0] =rs.getInt(0);
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-                if (rs == null) {
-                    JOptionPane.showMessageDialog(null, "Invalid crew id");
-                }
-            }
-        });
-
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String sql = "select workinghrs from staff where staffid='" + s + "'";
-                ResultSet rs = OpenConection.openConnection(sql);
-
-
-                try {
-                    s1[1] =rs.getInt(0);
-                } catch (SQLException e1) {
-                    e1.printStackTrace();
-                }
-                if (rs == null) {
-                    JOptionPane.showMessageDialog(null, "Invalid crew id");
-                }
-            }
-        });
 
         JButton button2 = new JButton();
         button2.setBounds(340, 70, 100, 20);
         button2.setText("new");
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql= "insert into staff values("+staffidF.getText()+","+salaryF.getText()+","+workingHoursF.getText()+")";
+                int roeAffectee=OpenConection.openConnection(sql,2);
+                if (roeAffectee==0)
+                 System.out.println("error ");
+                else
+                    JOptionPane.showMessageDialog(null, "record updated","Error",
+                            JOptionPane.ERROR_MESSAGE);
+            }
+        });
         crewpanel.add(button2);
 
         JButton button3 = new JButton();
         button3.setBounds(340, 90, 100, 20);
         button3.setText("edit");
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = " update staff set salary="+salaryF.getText()+","+"workinghrs="+workingHoursF.getText()+" where staffid="+staffidF.getText()+";";
+                System.out.println(sql);
+                int q=OpenConection.openConnection(sql,3);
+                if (q!=0)
+                    JOptionPane.showMessageDialog(null, "record updated","updated", JOptionPane.INFORMATION_MESSAGE);
+                else
+
+                    JOptionPane.showMessageDialog(null, "record not found","error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        });
         crewpanel.add(button3);
 
         JButton button4 = new JButton();
         button4.setBounds(340, 110, 100, 20);
         button4.setText("delete");
         button4.setBackground(new Color(888888888));
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = " delete from staff where staffid="+staffidF.getText()+";";
+                int g=OpenConection.openConnection(sql,4);
+                System.out.println(g);
+                if (g!=0)
+                    JOptionPane.showMessageDialog(null, "record deleted","updated", JOptionPane.INFORMATION_MESSAGE);
+                 else
+                    JOptionPane.showMessageDialog(null, "record not found","updated", JOptionPane.ERROR_MESSAGE);
+
+            }
+        });
         crewpanel.add(button4);
 
 
@@ -218,11 +247,11 @@ public class AdminMenu extends JFrame {
 //        crewpanel.add(CrewidLabelF);
         staffidF.setBounds(120, 70, 100, 20);
         crewpanel.add(staffidF);
-        JTextField salaryF = new JTextField("  ");
+
+
         salaryF.setBounds(120, 90, 100, 20);
         crewpanel.add(salaryF);
         salaryF.setText(String.valueOf(s1[0]));
-        JTextField workingHoursF = new JTextField(" ");
         workingHoursF.setBounds(120, 110, 100, 20);
         crewpanel.add(workingHoursF);
         workingHoursF.setText(String.valueOf(s1[1]));
@@ -296,83 +325,210 @@ public class AdminMenu extends JFrame {
 
     public JPanel getCheck() {
 
-        checkPanel = new JPanel();
+
         JTable table = new JTable();
+
+
+        checkPanel = new JPanel();
+        checkPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        checkPanel.setLayout(null);
+        checkPanel.setBounds(0, 0, 900, 800);
+        checkPanel.setBackground(new Color(2342423));
+
+//        JLabel CrewidLabel= new JLabel(" Crew id ");
+//        CrewidLabel.setBounds(5,50,100,20);
+//        checkPanel.add(CrewidLabel);
+//        JLabel fid = new JLabel(" flight id ");
+//        fid.setBounds(5, 70, 100, 20);
+//        checkPanel.add(fid);
+//        JLabel avaSeats = new JLabel(" A seats ");
+//        avaSeats.setBounds(5, 90, 100, 20);
+//        checkPanel.add(avaSeats);
+
+//
+//        JButton button = new JButton();
+//        button.setBounds(240, 70, 100, 20);
+//        button.setText("search");
+//        button.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//
+//            }
+//        });
+//        checkPanel.add(button);
+
+
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(0, 0, 900, 800);
-        checkPanel.add(scrollPane);
+        scrollPane.setBounds(0, 100, 100, 400);
+
         scrollPane.setViewportView(table);
 
-        String query="select * from light";
+        String query="select ticket_id,price from bookedticket"+";" ;
+        System.out.println(query);
+        ResultSet set=OpenConection.openConnection(query);
+        table.setModel(DbUtils.resultSetToTableModel(set));
+//                System.out.println(table.getModel().getValueAt(0,0));
+//        JButton button3 = new JButton();
+//        button3.setBounds(340, 90, 100, 20);
+//        button3.setText("edit");
+//        button3.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String sql = "insert into"
+//            }
+//        });
+//        checkPanel.add(button3);
 
-          ResultSet set=OpenConection.openConnection(query);
-        // Dont call While loop or if condition here
+//        JTextField CrewidLabelF= new JTextField("  ");
+//        CrewidLabelF.setBounds(120,50,100,20);
+//        checkPanel.add(CrewidLabelF);
+//        fifF.setBounds(120, 70, 100, 20);
+//        checkPanel.add(fifF);
+//        JTextField avaSeatsF = new JTextField("  ");
+//        avaSeatsF.setBounds(120, 90, 100, 20);
+//        checkPanel.add(avaSeatsF);
 
-      table.setModel(DbUtils.resultSetToTableModel(set));
+
+        checkPanel.add(scrollPane);
+
+
 
 
         return checkPanel;
     }
 
     public JPanel getUdatePanel() {
+//        updatePanel = new JPanel();
+//        updatePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+//        updatePanel.setLayout(null);
+//        updatePanel.setBounds(0, 0, 900, 800);
+//        updatePanel.setBackground(new Color(11111111));
+//
+////        JLabel CrewidLabel= new JLabel(" Crew id ");
+////        CrewidLabel.setBounds(5,50,100,20);
+////        updatePanel.add(CrewidLabel);
+//        JLabel fid = new JLabel(" fid");
+//        fid.setBounds(5, 70, 100, 20);
+//        updatePanel.add(fid);
+//        JLabel from = new JLabel(" from ");
+//        from.setBounds(5, 90, 100, 20);
+//        updatePanel.add(from);
+//        JLabel to = new JLabel(" to ");
+//        to.setBounds(5, 110, 100, 20);
+//        updatePanel.add(to);
+//
+//        JButton button = new JButton();
+//        button.setBounds(240, 70, 100, 20);
+//        button.setText("search");
+//        updatePanel.add(button);
+//
+//        JButton button2 = new JButton();
+//        button2.setBounds(340, 70, 100, 20);
+//        button2.setText("new");
+//        updatePanel.add(button2);
+//
+//        JButton button3 = new JButton();
+//        button3.setBounds(340, 90, 100, 20);
+//        button3.setText("edit");
+//        updatePanel.add(button3);
+//
+//        JButton button4 = new JButton();
+//        button4.setBounds(340, 110, 100, 20);
+//        button4.setText("delete");
+//        button4.setBackground(new Color(888888888));
+//        updatePanel.add(button4);
+//
+//
+////        JTextField CrewidLabelF= new JTextField("  ");
+////        CrewidLabelF.setBounds(120,50,100,20);
+////        updatePanel.add(CrewidLabelF);
+//        JTextField FidF = new JTextField(" ");
+//        FidF.setBounds(120, 70, 100, 20);
+//        updatePanel.add(FidF);
+//        JTextField fromF = new JTextField("  ");
+//        fromF.setBounds(120, 90, 100, 20);
+//        updatePanel.add(fromF);
+//        JTextField toF = new JTextField(" ");
+//        toF.setBounds(120, 110, 100, 20);
+//        updatePanel.add(toF);
+//
+//        return updatePanel;
+        JTextField fifF = new JTextField(" ");
+        JTable table = new JTable();
+
+
         updatePanel = new JPanel();
         updatePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         updatePanel.setLayout(null);
         updatePanel.setBounds(0, 0, 900, 800);
-        updatePanel.setBackground(new Color(11111111));
+        updatePanel.setBackground(new Color(2342423));
 
 //        JLabel CrewidLabel= new JLabel(" Crew id ");
 //        CrewidLabel.setBounds(5,50,100,20);
 //        updatePanel.add(CrewidLabel);
-        JLabel fid = new JLabel(" fid");
+        JLabel fid = new JLabel(" flight id ");
         fid.setBounds(5, 70, 100, 20);
         updatePanel.add(fid);
-        JLabel from = new JLabel(" from ");
-        from.setBounds(5, 90, 100, 20);
-        updatePanel.add(from);
-        JLabel to = new JLabel(" to ");
-        to.setBounds(5, 110, 100, 20);
-        updatePanel.add(to);
+//        JLabel avaSeats = new JLabel(" A seats ");
+//        avaSeats.setBounds(5, 90, 100, 20);
+//        updatePanel.add(avaSeats);
+
 
         JButton button = new JButton();
         button.setBounds(240, 70, 100, 20);
         button.setText("search");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String query="select * from light where flight_id="+fifF.getText()+";" ;
+                System.out.println(query);
+                ResultSet set=OpenConection.openConnection(query);
+                table.setModel(DbUtils.resultSetToTableModel(set));
+//                System.out.println(table.getModel().getValueAt(0,0));
+            }
+        });
         updatePanel.add(button);
 
-        JButton button2 = new JButton();
-        button2.setBounds(340, 70, 100, 20);
-        button2.setText("new");
-        updatePanel.add(button2);
 
         JButton button3 = new JButton();
         button3.setBounds(340, 90, 100, 20);
         button3.setText("edit");
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = "insert into";
+            }
+        });
         updatePanel.add(button3);
-
-        JButton button4 = new JButton();
-        button4.setBounds(340, 110, 100, 20);
-        button4.setText("delete");
-        button4.setBackground(new Color(888888888));
-        updatePanel.add(button4);
-
 
 //        JTextField CrewidLabelF= new JTextField("  ");
 //        CrewidLabelF.setBounds(120,50,100,20);
 //        updatePanel.add(CrewidLabelF);
-        JTextField FidF = new JTextField(" ");
-        FidF.setBounds(120, 70, 100, 20);
-        updatePanel.add(FidF);
-        JTextField fromF = new JTextField("  ");
-        fromF.setBounds(120, 90, 100, 20);
-        updatePanel.add(fromF);
-        JTextField toF = new JTextField(" ");
-        toF.setBounds(120, 110, 100, 20);
-        updatePanel.add(toF);
+        fifF.setBounds(120, 70, 100, 20);
+        updatePanel.add(fifF);
+//        JTextField avaSeatsF = new JTextField("  ");
+//        avaSeatsF.setBounds(120, 90, 100, 20);
+//        updatePanel.add(avaSeatsF);
+
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(0, 300, 900, 400);
+        updatePanel.add(scrollPane);
+        scrollPane.setViewportView(table);
+
+
+
 
         return updatePanel;
     }
 
     public JPanel getCheckReservationPanel() {
+        JTextField fifF = new JTextField(" ");
+        JTable table = new JTable();
+
+
         checkReservationPanel = new JPanel();
         checkReservationPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         checkReservationPanel.setLayout(null);
@@ -393,18 +549,34 @@ public class AdminMenu extends JFrame {
         JButton button = new JButton();
         button.setBounds(240, 70, 100, 20);
         button.setText("search");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                String query="select * from bookedticket where flight_id="+fifF.getText()+";" ;
+                System.out.println(query);
+                ResultSet set=OpenConection.openConnection(query);
+                table.setModel(DbUtils.resultSetToTableModel(set));
+//                System.out.println(table.getModel().getValueAt(0,0));
+            }
+        });
         checkReservationPanel.add(button);
 
 
-        JButton button3 = new JButton();
-        button3.setBounds(340, 90, 100, 20);
-        button3.setText("edit");
-        checkReservationPanel.add(button3);
+//        JButton button3 = new JButton();
+//        button3.setBounds(340, 90, 100, 20);
+//        button3.setText("edit");
+//        button3.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String sql = "insert into"
+//            }
+//        });
+//        checkReservationPanel.add(button3);
 
 //        JTextField CrewidLabelF= new JTextField("  ");
 //        CrewidLabelF.setBounds(120,50,100,20);
 //        checkReservationPanel.add(CrewidLabelF);
-        JTextField fifF = new JTextField(" ");
         fifF.setBounds(120, 70, 100, 20);
         checkReservationPanel.add(fifF);
 //        JTextField avaSeatsF = new JTextField("  ");
@@ -412,24 +584,11 @@ public class AdminMenu extends JFrame {
 //        checkReservationPanel.add(avaSeatsF);
 
 
-        JTable table = new JTable();
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBounds(0, 300, 900, 400);
         checkReservationPanel.add(scrollPane);
         scrollPane.setViewportView(table);
 
-        String query="select * from bookedticket where flight_id="+fifF.getText().toString()+";" ;
-System.out.println(query);
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                ResultSet set=OpenConection.openConnection(query);
-                // Dont call While loop or if condition here
-
-                table.setModel(DbUtils.resultSetToTableModel(set));
-            }
-        });
 
 
 

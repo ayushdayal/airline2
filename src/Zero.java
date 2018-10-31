@@ -23,7 +23,7 @@ public class Zero extends JFrame {
     String driverName = "com.mysql.jdbc.Driver";
     String url = "jdbc:mysql://localhost:3306/flight";
     String userName = "root";
-    String password = "sidhu@007";
+    String password = "root";
     private JPanel panel1;
 
     /**

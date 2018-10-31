@@ -80,12 +80,10 @@ public class PreviousBooking extends JFrame {
 	
 	try
 	{ 
-	Class.forName(driverName); 
-	Connection con = DriverManager.getConnection(url, userName, password);
+
 	String sql = "select flight_id,ticket_id,price from bookedticket where username='"+username+"'";
-	PreparedStatement ps = con.prepareStatement(sql);
-	
-		ResultSet rs = ps.executeQuery();
+
+		ResultSet rs = OpenConection.openConnection(sql);
 		int i =0;
 		
 		while(rs.next())
@@ -94,9 +92,8 @@ public class PreviousBooking extends JFrame {
 		ticketid=rs.getInt("ticket_id");
 		price = rs.getInt("price"); 
 		sql="select fName , dFrom,arrivesto from light where flight_id="+flightid;
-		ps=con.prepareStatement(sql);
 		System.out.println("Vaibhav");
-		rs=ps.executeQuery();
+		rs=OpenConection.openConnection(sql);
 		fname=rs.getString(1);
 		departure=rs.getString(2);
 		arrival=rs.getString(3);
@@ -113,7 +110,6 @@ public class PreviousBooking extends JFrame {
 	JOptionPane.showMessageDialog(null, "No Record Found","Error",
 	JOptionPane.ERROR_MESSAGE);
 	}
-	con.close();
 	/*if(i ==1)
 	{
 	System.out.println(i+" Record Found");

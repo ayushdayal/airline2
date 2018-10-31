@@ -126,12 +126,9 @@ public class LoginPage extends JFrame {
 	
 	try
 	{ 
-	Class.forName(driverName); 
-	Connection con = DriverManager.getConnection(url, userName, password);
 	String sql = "select * from light";
-	PreparedStatement ps = con.prepareStatement(sql);
-	
-		ResultSet rs = ps.executeQuery();
+
+		ResultSet rs = OpenConection.openConnection(sql);
 		int i =0;
 		
 		if(rs.next())
@@ -152,7 +149,6 @@ public class LoginPage extends JFrame {
 	JOptionPane.showMessageDialog(null, "No Record Found","Error",
 	JOptionPane.ERROR_MESSAGE);
 	}
-	con.close();
 	/*if(i ==1)
 	{
 	System.out.println(i+" Record Found");

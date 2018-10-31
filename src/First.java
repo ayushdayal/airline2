@@ -59,14 +59,13 @@ public class First extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				try
 				{ 
-				Class.forName(driverName); 
-				Connection con = DriverManager.getConnection(url, userName, password);
+
 				String s=userName_1.getText();
 				String p=passwordField.getSelectedText();
 				String sql = "select * from customers where USERNAME='"+s+"'and password='"+p+"'";
-				PreparedStatement ps = con.prepareStatement(sql);
+
 				
-					ResultSet rs = ps.executeQuery();
+					ResultSet rs = OpenConection.openConnection(sql);
 					if(
 							rs==null)
 					{
@@ -81,7 +80,7 @@ public class First extends JFrame {
 							rgf.setVisible(true);
 							setVisible(false);
 							dispose();
-							 con.close();
+
 						
 					}
 					

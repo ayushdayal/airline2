@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 
 public class booking extends JFrame {
 
+	//todo: change username manualy
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -49,7 +50,7 @@ public class booking extends JFrame {
 	String driverName = "com.mysql.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/flight";
 	String userName = "root";
-	String password = "Vs16656915<>";
+	String password = "root";
 	
 	/**
 	 * Launch the application.

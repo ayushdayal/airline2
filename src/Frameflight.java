@@ -182,12 +182,13 @@ public class Frameflight  {
 		btnSignIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				try {
-					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/flight","root","sidhu@007");
-					Statement stmt=con.createStatement();
+//					Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/flight","root","sidhu@007");
+//					Statement stmt=con.createStatement();
 					String sql="insert into CUSTOMERS(USERNAME,PASSWORD,NAME,AGE,ADDRESS,PHONE_NO,EMAIL)"+" VALUES('"+textField.getText()+"','"+textField_1.getText()+"','"+textField_2.getText()+
 							"','"+textField_3.getText()+"','"+textField_4.getText()+"','"+textField_5.getText()+"','"+textField_6.getText()+"')";
-					stmt.executeUpdate(sql);
-					con.close();
+					//stmt.executeUpdate(sql);
+					OpenConection.openConnection(sql);
+					//con.close();
 					JOptionPane.showMessageDialog(null,"customer added");
 					
 							
