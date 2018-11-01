@@ -14,5 +14,6 @@
     <orderEntry type="library" name="jgoodies-common-1.8.0-sources" level="project" />
     <orderEntry type="library" name="mysql-connector-java-5.1.47" level="project" />
     <orderEntry type="library" name="rs2xml" level="project" />
+    <orderEntry type="library" name="rs2xml1" level="project" />
   </component>
 </module>

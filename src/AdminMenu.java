@@ -46,7 +46,7 @@ public class AdminMenu extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(null);
         contentPane.setBounds(0, 0, 800, 20);
-        contentPane.setBackground(new Color(100100));
+        contentPane.setBackground(new Color(255,255,255));
 
         JMenuBar mainmenu = new JMenuBar();
         mainmenu.setBounds(0, 0, 900, 20);
@@ -95,7 +95,7 @@ public class AdminMenu extends JFrame {
         payment.add(check);
         mainmenu.add(flight);
         mainmenu.add(staff);
-        mainmenu.add(payment);
+//        mainmenu.add(payment);
 
         //main bar panel
         contentPane.add(mainmenu);
@@ -264,7 +264,7 @@ public class AdminMenu extends JFrame {
         pilotPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         pilotPanel.setLayout(null);
         pilotPanel.setBounds(0, 0, 900, 800);
-        pilotPanel.setBackground(new Color(327879));
+        pilotPanel.setBackground(new Color(255,255,255));
 
 //        JLabel CrewidLabel= new JLabel(" Crew id ");
 //        CrewidLabel.setBounds(5,50,100,20);
@@ -278,7 +278,7 @@ public class AdminMenu extends JFrame {
         JLabel workingHours = new JLabel(" working hours ");
         workingHours.setBounds(5, 110, 100, 20);
         pilotPanel.add(workingHours);
-        JLabel LicenceNo = new JLabel(" working hours ");
+        JLabel LicenceNo = new JLabel(" license number ");
         LicenceNo.setBounds(5, 130, 100, 20);
         pilotPanel.add(LicenceNo);
 
@@ -300,7 +300,7 @@ public class AdminMenu extends JFrame {
         JButton button4 = new JButton();
         button4.setBounds(340, 110, 100, 20);
         button4.setText("delete");
-        button4.setBackground(new Color(888888888));
+        button4.setBackground(new Color(255,255,255));
         pilotPanel.add(button4);
 
 
@@ -319,6 +319,71 @@ public class AdminMenu extends JFrame {
         JTextField LicenceNoF = new JTextField(" working hours ");
         LicenceNoF.setBounds(120, 130, 100, 20);
         pilotPanel.add(LicenceNoF);
+
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql="select * from pilot where pid=\'"+staffidF.getText()+"\'";
+                ResultSet rs= OpenConection.openConnection(sql);
+                try {
+                    rs.next();
+                    salaryF.setText( String.valueOf(rs.getInt(3)) );
+                    workingHoursF.setText( String.valueOf(rs.getInt(4)) );
+                    LicenceNoF.setText(rs.getString(2));
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+
+
+            }
+        });
+
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql= "insert into pilot values("+staffidF.getText()+",\'" +LicenceNoF.getText()+"\'," +salaryF.getText()+","+workingHoursF.getText()+")";
+                int roeAffectee=OpenConection.openConnection(sql,2);
+                if (roeAffectee==0)
+                    System.out.println("error ");
+                else
+                    JOptionPane.showMessageDialog(null, "record updated","inserted",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+            }
+        });
+
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = " update pilot set licenseno=\'"+LicenceNoF.getText()+"\',salary="+salaryF.getText()+","+"workingH="+workingHoursF.getText()+" where pid="+staffidF.getText()+";";
+                System.out.println(sql);
+                int q=OpenConection.openConnection(sql,3);
+                if (q!=0)
+                    JOptionPane.showMessageDialog(null, "record updated","updated", JOptionPane.INFORMATION_MESSAGE);
+                else
+
+                    JOptionPane.showMessageDialog(null, "record not found","error", JOptionPane.ERROR_MESSAGE);
+
+
+            }
+        });
+
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String sql = " delete from pilot where pid="+staffidF.getText()+";";
+                int g=OpenConection.openConnection(sql,4);
+                System.out.println(g);
+                if (g!=0)
+                    JOptionPane.showMessageDialog(null, "record deleted","updated", JOptionPane.INFORMATION_MESSAGE);
+                else
+                    JOptionPane.showMessageDialog(null, "record not found","updated", JOptionPane.ERROR_MESSAGE);
+
+            }
+        });
+
+
 
         return pilotPanel;
     }
@@ -492,13 +557,42 @@ public class AdminMenu extends JFrame {
         updatePanel.add(button);
 
 
-        JButton button3 = new JButton();
-        button3.setBounds(340, 90, 100, 20);
+        JButton button3 = new JButton();  // edit btn
+        button3.setBounds(340, 70, 100, 20);
         button3.setText("edit");
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String sql = "insert into";
+                //String sql = "insert into";
+
+
+                int fid=Integer.valueOf(table.getModel().getValueAt(0,0).toString());
+                String fnam=table.getModel().getValueAt(0,0).toString();
+                String from=table.getModel().getValueAt(0,1).toString();
+                String to=table.getModel().getValueAt(0,2).toString();
+                int seats=Integer.valueOf(table.getModel().getValueAt(0,3).toString());;
+                int pric=Integer.valueOf(table.getModel().getValueAt(0,4).toString());;
+                int totSeats=Integer.valueOf(table.getModel().getValueAt(0,5).toString());;
+
+                String sql = " update light set fName=\'"+fnam+"\',dFrom=\'"+from+"\',arrivesTo=\'"+to+"\',Seats="
+                        +Integer.toString(seats)+",Price="+Integer.toString(seats)+",totalseats="+
+                        Integer.toString(seats)+" where flight_id="+Integer.toString(fid)+";";
+                System.out.println(sql);
+                int q=OpenConection.openConnection(sql,3);
+                if (q!=0)
+                    JOptionPane.showMessageDialog(null, "record updated","updated", JOptionPane.INFORMATION_MESSAGE);
+                else
+
+                    JOptionPane.showMessageDialog(null, "record not found","error", JOptionPane.ERROR_MESSAGE);
+
+
+
+
+
+
+
+
+
             }
         });
         updatePanel.add(button3);

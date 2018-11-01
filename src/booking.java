@@ -48,7 +48,7 @@ public class booking extends JFrame {
 		
 	}
 	String driverName = "com.mysql.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/flight";
+	String url = "jdbc:mysql://localhoaaaaaaa	st:3306/flight";
 	String userName = "root";
 	String password = "root";
 	
@@ -59,7 +59,7 @@ public class booking extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					booking frame = new booking();
+					booking frame = new booking(-1,-1,"invalid");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,7 +75,9 @@ public class booking extends JFrame {
 	{
 		this.amountfield.setText(s);
 	}
-	public booking() {
+
+	public booking(int f_id,int price,String uname) {
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 916, 660);
 		contentPane = new JPanel();
@@ -148,30 +150,32 @@ public class booking extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try
 				{ 
-				Class.forName(driverName); 
-				Connection con = DriverManager.getConnection(url, userName, password);
-				
-					
-					
-					 
-					String sql = "insert into bookedticket(flight_id,ticket_id,price,username)"+" VALUES(?,?,?,?)";
-					
-					PreparedStatement preparedStmt = con.prepareStatement(sql);
-					Random rand = new Random();
+//				Class.forName(driverName);
+//				Connection con = DriverManager.getConnection(url, userName, password);
 
-					int  n = rand.nextInt(2000) + 1;
-				      preparedStmt.setInt (1, flight_id);
-				      preparedStmt.setInt (2, flight_id+n);
-				      
-				      
-				      preparedStmt.setInt    (3, Integer.parseInt(amountfield.getText()));
-				      preparedStmt.setString(4, username);
+					String sql = "insert into bookedticket(flight_id,price,username) VALUES("+f_id+","+price+","+"\'"+uname+"\');";
+
+//					PreparedStatement preparedStmt = con.prepareStatement(sql);
+//					Random rand = new Random();
+
+					int i=OpenConection.openConnection(sql,7);
+					if(i!=0){
+						JOptionPane.showMessageDialog(null,"Booked");
+					}
+
+//					int  n = rand.nextInt(2000) + 1;
+//				      preparedStmt.setInt (1, flight_id);
+//				      preparedStmt.setInt (2, flight_id+n);
+//
+//
+//				      preparedStmt.setInt    (3, Integer.parseInt(amountfield.getText()));
+//				      preparedStmt.setString(4, username);
+//
+//				      preparedStmt.execute();
+//
+//				      con.close();
 					
-				      preparedStmt.execute();
-				      
-				      con.close();
-					
-					 JOptionPane.showMessageDialog(null,"Booked");
+
 				
 			}
 				catch(Exception exp)

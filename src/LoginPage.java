@@ -101,7 +101,8 @@ public class LoginPage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	
+	int f_id,price;
+	String uname="";
 	public LoginPage() 
 		{
 			
@@ -227,14 +228,24 @@ rs=OpenConection.openConnection(getDestinationQuery);
 			btnNewButton.setBounds(408, 642, 85, 21);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					booking rgf=new booking();
-					String s=textField1.getText();
-						rgf.setAmount(s);
-						int result = Integer.parseInt(textField.getText());
-						s=username;
-						rgf.setFlightid(result);
-						rgf.setusername(s);
-						
+//					booking rgf=new booking();
+//					String s=textField1.getText();
+//						rgf.setAmount(s);
+//						int result = Integer.parseInt(textField.getText());
+//						s=username;
+//						rgf.setFlightid(result);
+//						rgf.setusername(s);
+					String sql="select * from light where flight_id="+Integer.valueOf(textField1.getText())+";";
+					try {
+						ResultSet rs1=OpenConection.openConnection(sql);
+						rs1.next();
+						f_id=rs1.getInt(1);
+						price=rs1.getInt(6);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					uname=username;
+					booking rgf=new booking(f_id,price,uname);
 					rgf.setVisible(true);
 					
 					setVisible(false);

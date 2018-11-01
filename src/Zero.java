@@ -20,11 +20,11 @@ public class Zero extends JFrame {
     private JTextField userName_1;
     private JLabel lblNewLabel;
     private JPasswordField passwordField;
-    String driverName = "com.mysql.jdbc.Driver";
-    String url = "jdbc:mysql://localhost:3306/flight";
-    String userName = "root";
-    String password = "root";
-    private JPanel panel1;
+//    String driverName = "com.mysql.jdbc.Driver";
+//    String url = "jdbc:mysql://localhost:3306/flight";
+//    String userName = "root";
+//    String password = "root";
+//    private JPanel panel1;
 
     /**
      * Launch the application.
